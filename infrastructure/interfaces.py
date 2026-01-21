@@ -1,6 +1,21 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional
-from domain.entities import MCSDocument, MCSDocumentChunk, QueryResult
+from typing import List
+from domain.entities import MCSDocumentChunk, QueryResult
+
+class IKnowledgeService(ABC):
+    """Interface for knowledge service operations."""
+
+    @abstractmethod
+    async def retrieve(self, question: str, top_k: int = 2) -> QueryResult:
+        """Handles a query to the knowledge base."""
+        pass
+
+class IDocumentService(ABC):
+    """Interface for document loading and ingestion services."""
+    @abstractmethod
+    async def ingest_documents(self, directory_path: str) -> List[MCSDocumentChunk]:
+        """Ingest documents from the specified directory and return document chunks."""
+        pass
 
 class IKnowledgeBase(ABC):
     """

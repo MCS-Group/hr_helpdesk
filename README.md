@@ -1,6 +1,6 @@
 # MCS HR Helpdesk
 
-Knowledge-based AI Agent that responds to employees asking HR questions in concordance with Human Resources.
+Knowledge-based MCS Agent that responds to employees asking questions in concordance with Human Resources documents and regulations.
 
 # License
 GPL License
