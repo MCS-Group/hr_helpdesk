@@ -13,7 +13,7 @@ async def main():
     kb = LlamaIndexKnowledgeBase("./storage", False)
     kb_service = KnowledgeService(kb)
     
-    query_result = await kb_service.retrieve(
+    query_result = await kb_service.query(
         "Цалингүй чөлөө авах арга" 
     )
     for chunk in query_result.chunks:
@@ -21,4 +21,4 @@ async def main():
         
 
 if __name__ == "__main__":
-    asyncio.run(main=main())
+    asyncio.run(main())

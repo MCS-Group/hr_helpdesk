@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 from services.document_service import DocumentService
+from infrastructure.adapters.llamaindex_adapter import LlamaIndexKnowledgeBase
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("TestDocumentService")
@@ -13,6 +14,11 @@ async def main():
 
     for chunk in chunks:
         logger.info(f"Chunk ID: {chunk.chunk_id}\nContent Preview: {chunk.content[:100]}\nMetadata: {chunk.metadata}\n{'-'*40}")
+
+    kb = LlamaIndexKnowledgeBase(persist_dir="./storage")
+    await kb.insert(chunks)
+    logger.info("Inserted chunks into the knowledge base.")
+    
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -1,13 +1,19 @@
-from abc import ABC, abstractmethod
 from typing import List
+
+from abc import ABC, abstractmethod
 from domain.entities import MCSDocumentChunk, QueryResult
 
 class IKnowledgeService(ABC):
     """Interface for knowledge service operations."""
 
     @abstractmethod
-    async def retrieve(self, question: str, top_k: int = 2) -> QueryResult:
+    async def query(self, question: str, top_k: int = 2) -> QueryResult:
         """Handles a query to the knowledge base."""
+        pass
+
+    @abstractmethod
+    async def insert(self, chunks: List[MCSDocumentChunk]) -> bool:
+        """Inserts document chunks into the knowledge base."""
         pass
 
 class IDocumentService(ABC):
@@ -15,6 +21,13 @@ class IDocumentService(ABC):
     @abstractmethod
     async def ingest_documents(self, directory_path: str) -> List[MCSDocumentChunk]:
         """Ingest documents from the specified directory and return document chunks."""
+        pass
+
+class ILLMService(ABC):
+    """Interface for LLM generation on grounds of prompt set and context."""
+    @abstractmethod
+    async def synthesize_response(self, context: List[MCSDocumentChunk]) -> str:
+        """Generate a response from the LLM based on the given context."""
         pass
 
 class IKnowledgeBase(ABC):
