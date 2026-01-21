@@ -1,0 +1,10 @@
+llama-index
+llama-index-embeddings-jinaai
+llama-index-llms-openai
+Pillow
+python-dotenv
+fastapi[standard]
+uvicorn
+aiohttp
+botbuilder-core
+httpx
