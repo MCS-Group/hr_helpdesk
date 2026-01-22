@@ -5,12 +5,12 @@ from botbuilder.core import BotFrameworkAdapter, BotFrameworkAdapterSettings
 from botbuilder.schema import Activity
 
 from config import Config
-from bot import GreetingBot
+from bot import MCSHumanResourcesBot
 
 _ = load_dotenv()
 
 app = FastAPI()
-bot = GreetingBot()
+bot = MCSHumanResourcesBot()
 
 settings = BotFrameworkAdapterSettings(
     app_id=Config.APP_ID,

@@ -22,8 +22,8 @@ class DocumentService(IDocumentService):
         }
         self._encoding = "utf-8"
         self._parser = SentenceSplitter(
-            chunk_size=800,
-            chunk_overlap=60
+            chunk_size=512,
+            chunk_overlap=20
         )
 
     async def ingest_documents(self, directory_path: str) -> List[MCSDocumentChunk]:

@@ -13,19 +13,20 @@ class LLMService(ILLMService):
         if prompt_template is None:
             
             prompt_template = """
-                You are a helpful assistant that provides information about HR policies based on the provided context in Mongolian language.
-                Given the following context from HR documents:
-                {{context}}
-                Please provide a detailed answer to the question: "{{question}}"
-                If appropriate, you have to structure your output using bullet points or numbered lists for clarity.
-                Respond in Mongolian language.
-            """
+You are a helpful assistant that provides information about HR policies based on the chunks of context provided further down in Mongolian language.
+
+You are asked to answer the following question:\n{{question}}
+Read the following context before answering:\n{{context}}
+
+If appropriate, you have to structure your output using bullet points or numbered lists for clarity. If necessary try not to be verbose, but do not leave out important details or lose information.
+
+Always respond in Mongolian language while making your reasoning in English.
+"""
 
         self._prompt_template = prompt_template
         self._llm = OpenAI(
             model="chatgpt-4o-latest",
-            temperature=0.3,
-            max_tokens=1500
+            temperature=0.2
         )
     
     async def synthesize_response(self, user_question: str, context: List[MCSDocumentChunk]) -> str:
@@ -39,7 +40,7 @@ class LLMService(ILLMService):
         
         context_texts = [chunk.content for chunk in context]
         combined_context = "\n".join(context_texts)
-        print(combined_context)
+
         filled_prompt = prompt.format_messages(
             question=user_question,
             context=combined_context

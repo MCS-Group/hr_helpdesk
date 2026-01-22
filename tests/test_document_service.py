@@ -9,8 +9,8 @@ logger = logging.getLogger("TestDocumentService")
 
 async def main():
     document_service = DocumentService([".pdf"])
-    logger.info("Starting document ingestion from 'test_docs/' directory...")
-    chunks = await document_service.ingest_documents("test_docs/")
+    logger.info("Starting document ingestion from 'docs/' directory...")
+    chunks = await document_service.ingest_documents("docs/")
 
     for chunk in chunks:
         logger.info(f"Chunk ID: {chunk.chunk_id}\nContent Preview: {chunk.content[:100]}\nMetadata: {chunk.metadata}\n{'-'*40}")
@@ -18,6 +18,7 @@ async def main():
     kb = LlamaIndexKnowledgeBase(persist_dir="./storage")
     await kb.insert(chunks)
     logger.info("Inserted chunks into the knowledge base.")
+    await kb.persist()
     
 
 if __name__ == "__main__":
