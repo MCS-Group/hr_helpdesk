@@ -6,13 +6,13 @@ from services.knowledge_service import KnowledgeService
 from services.llm_service import LLMService
 
 
-from services.react_service import workflow
+from services.react_service import workflow, ctx
 
 #kb_service = KnowledgeService(None)
 #llm_service = LLMService(None)
 
 class MCSHumanResourcesBot(ActivityHandler):
-    
+
     async def on_message_activity(self, turn_context: TurnContext):
         
         await turn_context.send_activity(
@@ -28,7 +28,7 @@ class MCSHumanResourcesBot(ActivityHandler):
 
         email = member.email
         employee_query = f"Ажилтны email: {email}\nАжилтны асуулт: {query}"
-        response = await workflow.run(user_msg=employee_query)
+        response = await workflow.run(user_msg=employee_query, ctx=ctx)
         
         #context = await kb_service.query(query, top_k=5)
         #response = await llm_service.synthesize_response(query, context.chunks)

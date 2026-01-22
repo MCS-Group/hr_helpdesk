@@ -3,6 +3,7 @@ import logging
 import pandas as pd
 from llama_index.llms.openai import OpenAI
 from llama_index.core.agent.workflow import FunctionAgent
+from llama_index.core.workflow import Context
 from services.knowledge_service import KnowledgeService
 
 knowledge_service = KnowledgeService(None)
@@ -75,3 +76,4 @@ Try to format your final response in a clear and structured manner, using bullet
 """
 )
 
+ctx = Context(workflow)
