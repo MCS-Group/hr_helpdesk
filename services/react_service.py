@@ -58,6 +58,29 @@ def calculate_employee_working_hours(employee_email: str) -> str:
     return response
 
 
+def submit_timesheet(employee_email: str, timestamp: str, hours: float, absence_type: str) -> str:
+    """
+    Invoke this function if the employee wants to submit a timesheet entry for their absence or working hours. If they request you to submit a timesheet entry, but didn't provide all necessary details, you must inquire the timesheet entry details this function requires such as timestamp, hours and the reason for absence/work.
+    
+    Args:
+        employee_email (str): The email of the employee.
+        timestamp (str): The starting timestamp of the timesheet entry.
+        hours (float): The number of hours worked or absent.
+        absence_type (str): categorize the type of absence into one of the following list: "өвчтэй", "амралтаа авсан", "тасалсан", "хоцорсон", "гэрээс ажилласан" and "гадуур ажилласан".
+
+    Returns:
+        str: A message indicating the successful submission of the timesheet entry.
+    """
+    # Here you would implement the logic to submit the timesheet entry to your database or system.
+    # For demonstration purposes, we'll just return a success message.
+    response = (f"Ажилтан {employee_email}-ний хүсэлтийн дагуу ERP систем рүү дараах цаг бүртгэлийн хүсэлтийг илгээсэн:\n"
+                f"Хэзээ: {timestamp}\n"
+                f"Хэдэн цаг: {hours}\n"
+                f"Ажил дээр байгаагүй шалтгаан: {absence_type}")
+    
+    print(f"Ажилтан {employee_email} дээр цаг бүртгэл илгээлээ: {response}")
+    return response
+
 workflow = FunctionAgent(
     tools=[calculate_employee_working_hours, ask_knowledge_base],
     llm=OpenAI(model="gpt-4o-mini", temperature=0.1),
@@ -70,7 +93,9 @@ Second, you must use the tools at your disposal and provide accurate and helpful
      
 For example, if an employee asks about their working hours or implies it in their query, you must call the 'calculate_employee_working_hours' function with their employee email to provide accurate information.
 
-If the employee asks anything related to workplace policies, procedures, benefits, payroll or organizational regulations, you must call the 'ask_knowledge_base' function with their interpreted query to get the accurate information from the knowledge base. When querying the knowledge base, ensure that you interpret the employee's query to extract the intent rather than simply copy-pasting the employee query.
+If the employee asks anything related to workplace policies, procedures, benefits, payroll or organizational regulations, you must call the 'ask_knowledge_base' function with their interpreted query to get the accurate information from the knowledge base. When querying the knowledge base, ensure that you interpret the employee's query to extract the intent rather than simply copy-pasting the employee query. If you respond according to the knowledge base citations, make sure to include their brief references in your final answer, such as according to [Citation 1], [Citation 2], etc.
+
+If the employee requests to submit a timesheet entry for their absence or working hours, you must ask for the necessary details such as timestamp, hours, and absence type. Once you have all the required information, you should inform the employee that their timesheet entry has been submitted successfully. However, you do not need to implement the actual submission logic; just confirm the submission in your response.
 
 Try to format your final response in a clear and structured manner, using bullet points or numbered lists where appropriate to enhance readability.
 """
