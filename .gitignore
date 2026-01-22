@@ -1,7 +1,6 @@
 # Custom ignores
 storage/
 src/
-bot.py
 config.py
 
 # Byte-compiled / optimized / DLL files
